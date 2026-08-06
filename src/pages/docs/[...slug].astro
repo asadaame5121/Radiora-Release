@@ -12,9 +12,10 @@ export async function getStaticPaths() {
 
 const { doc } = Astro.props;
 const { Content } = await render(doc);
+const updatedLabel = doc.data.updated ? `最終更新: ${doc.data.updated.toISOString().slice(0, 10)}` : null;
 ---
 
 <DocsLayout title={doc.data.title} description={doc.data.description}>
-	{doc.data.updated && <p class="updated">最終更新: {doc.data.updated}</p>}
+	{updatedLabel && <p class="updated">{updatedLabel}</p>}
 	<Content />
 </DocsLayout>

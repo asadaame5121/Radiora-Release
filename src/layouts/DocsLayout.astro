@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import '../styles/global.css';
 
-const { title, description, children } = Astro.props;
+const { title, description } = Astro.props;
 const docs = (await getCollection('docs')).sort((a, b) => a.data.order - b.data.order);
 const groups = ['Start', 'Concepts', 'Guides', 'Reference'];
 const currentPath = Astro.url.pathname;
@@ -50,7 +50,7 @@ const currentPath = Astro.url.pathname;
 					<div class="eyebrow">RADIORA / DOCUMENTATION</div>
 					<article>
 						<h1>{title}</h1>
-						{children}
+						<slot />
 					</article>
 				</main>
 			</div>
