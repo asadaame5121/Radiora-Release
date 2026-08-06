@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import '../styles/global.css';
+
+const docs = (await getCollection('docs')).sort((a, b) => a.data.order - b.data.order);
+const featured = docs.slice(0, 4);
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<meta name="description" content="Radioraの公式ドキュメント。思索、関係、異本を育てるローカルファーストのアウトライナー。" />
+		<title>Radiora — 思索を育てる</title>
+	</head>
+	<body class="home-body">
+		<div class="home-shell">
+			<header class="topbar">
+				<a class="brand" href="/">
+					<span class="brand-mark">R</span>
+					<span>Radiora <small>docs</small></span>
+				</a>
+				<nav class="topnav" aria-label="外部リンク">
+					<a href="https://github.com/asadaame5121/Radiora">Source</a>
+					<a href="https://github.com/asadaame5121/Radiora-Release/releases">Releases</a>
+				</nav>
+			</header>
+
+			<section class="hero">
+				<div class="hero-copy">
+					<p class="hero-kicker">LOCAL-FIRST THINKING ENVIRONMENT</p>
+					<h1>思索を、<em>生きた構造</em>へ。</h1>
+					<p class="hero-lede">Radioraは、短い着想から長文の稿までを同じ思索として保存し、配置・意味関係・改稿・系統を一つのアウトラインで育てるためのローカルアプリです。</p>
+					<div class="hero-actions">
+						<a class="button button-primary" href="/docs/getting-started">はじめる <span>→</span></a>
+						<a class="button button-ghost" href="/docs/overview">Radioraとは</a>
+					</div>
+				</div>
+				<div class="hero-visual" aria-label="Radioraの概念図">
+					<div class="orbit orbit-one"></div>
+					<div class="orbit orbit-two"></div>
+					<div class="core-node">思索</div>
+					<div class="satellite satellite-a">配置</div>
+					<div class="satellite satellite-b">関係</div>
+					<div class="satellite satellite-c">異本</div>
+					<div class="satellite satellite-d">稿</div>
+				</div>
+			</section>
+
+			<section class="home-section">
+				<div class="section-heading">
+					<p class="hero-kicker">EXPLORE THE MODEL</p>
+					<h2>まずは、ここから。</h2>
+				</div>
+				<div class="feature-grid">
+					{featured.map((doc, index) => (
+						<a class="feature-card" href={`/docs/${doc.id}`}>
+							<span class="feature-index">0{index + 1}</span>
+							<h3>{doc.data.title}</h3>
+							<p>{doc.data.description}</p>
+							<span class="card-arrow">↗</span>
+						</a>
+					))}
+				</div>
+			</section>
+
+			<section class="principle-band">
+				<div>
+					<p class="hero-kicker">THE RADIORA PRINCIPLE</p>
+					<h2>決め切らないことから、<br />構造は育ちはじめる。</h2>
+				</div>
+				<p>配置と同一性、候補と確定、作業稿と版を分けることで、考えの途中を失わずに保てます。</p>
+			</section>
+
+			<footer class="site-footer">
+				<span>Radiora is a local-first thinking environment.</span>
+				<span>MIT License</span>
+			</footer>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import '../styles/global.css';
+
+const { title, description, children } = Astro.props;
+const docs = (await getCollection('docs')).sort((a, b) => a.data.order - b.data.order);
+const groups = ['Start', 'Concepts', 'Guides', 'Reference'];
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{title} — Radiora</title>
+	</head>
+	<body>
+		<div class="site-shell">
+			<header class="topbar">
+				<a class="brand" href="/">
+					<span class="brand-mark">R</span>
+					<span>Radiora <small>docs</small></span>
+				</a>
+				<nav class="topnav" aria-label="外部リンク">
+					<a href="https://github.com/asadaame5121/Radiora">Source</a>
+					<a href="https://github.com/asadaame5121/Radiora-Release/releases">Releases</a>
+				</nav>
+			</header>
+
+			<div class="content-grid">
+				<aside class="sidebar">
+					<p class="sidebar-label">DOCUMENTATION</p>
+					{groups.map((group) => (
+						<div class="nav-group">
+							<p>{group}</p>
+							{docs.filter((doc) => doc.data.section === group).map((doc) => (
+								<a class:list={{ active: currentPath === `/docs/${doc.id}` }} href={`/docs/${doc.id}`}>
+									{doc.data.title}
+								</a>
+							))}
+						</div>
+					))}
+				</aside>
+
+				<main class="doc-main">
+					<div class="eyebrow">RADIORA / DOCUMENTATION</div>
+					<article>
+						<h1>{title}</h1>
+						{children}
+					</article>
+				</main>
+			</div>
+
+			<footer class="site-footer">
+				<span>Radiora is a local-first thinking environment.</span>
+				<span>MIT License</span>
+			</footer>
+		</div>
+	</body>
+</html>
