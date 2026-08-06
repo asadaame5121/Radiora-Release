@@ -1,6 +1,6 @@
 ---
 title: はじめる
-description: Radioraを起動し、最初の思索を書き、アウトラインを育てるまで。
+description: Radioraを起動し、最初の項目を書いて、アウトラインを使い始めるまでの手順。
 section: Start
 order: 2
 updated: 2026-08-06
@@ -8,38 +8,77 @@ updated: 2026-08-06
 
 ## 必要な環境
 
-現在のPoCはWindows版Deno 2.9以上とNode.js/npmを前提にしています。
+Windowsで動作します。Windows版Deno 2.9以上とNode.js/npmが必要です。コマンドはPowerShellまたはNushellで実行してください。WSLやbashからは起動できません。
+
+## 起動する
 
 ```powershell
 npm install
 deno task desktop
 ```
 
-生成済みbundleを起動するだけなら `deno task desktop:run` を使います。起動できない場合は `deno task desktop:preflight` で環境診断を実行してください。
+`deno task desktop` は環境診断、フロントエンドのビルド、bundle生成を行ってからアプリを起動します。生成済みのbundleだけを起動する場合は次を使います。
+
+```powershell
+deno task desktop:run
+```
+
+アプリを起動したまま再度ビルドすると、生成先がロックされて失敗します。その場合は先にアプリのウィンドウを閉じてください。
+
+起動すると、最初に起動状態が表示され、その後ローカルデータを読み込みます。初期化に失敗した場合はウィンドウ内に原因と再試行ボタンが表示されます。
+
+## 配布用Zipから起動する
+
+現在の配布物はZipです。ベータ版のため、次を実行します。
+
+1. リリースページから配布用Zipをダウンロードし、任意のフォルダへ展開します。
+2. 展開先の `Radiora-v2-*.exe`（アプリの起動ファイル）をダブルクリックします。
+3. 初回は起動までに時間がかかることがあります。起動状態の表示から、ローカルデータの読み込みまで待ちます。
+
+起動ファイルの名前は、バンドルに含まれるランチャーの形式（`.exe` または `.bat`）によって異なります。
+
+> [!note] 起動の保証について
+> アプリは開発中のDeno Desktop上で動作するため、環境によっては起動できない場合があります。起動しない場合は、以下の「起動できない場合」の手順に沿って確認してください。
+
+データはアプリ本体のフォルダではなく `%LOCALAPPDATA%` 側に保存されるため、配布物のフォルダを削除してもデータは消えません。
+
+## 起動できない場合
+
+1. `deno task desktop:preflight` を実行し、環境診断を確認します。
+2. `Deno Desktop requires Deno 2.9.0 or newer` と表示される場合は、Denoを更新してください。
+3. 詳細な記録は `%LOCALAPPDATA%\RadioraV2\logs\startup.log` に保存されます。原因と再試行ボタンがウィンドウに表示された場合は、ログを確認してください。
+
+WindowsとWSLで同じ `node_modules` を共有しないでください。ネイティブ依存がOSごとに異なるため、bundleのビルドと実行はWindows PowerShell側で `npm install` した依存を使ってください。
 
 ## 最初の操作
 
-- 本文で `Enter` を押すと同じ階層へ項目を追加します。
+- 項目の本文で `Enter` を押すと、同じ階層に項目を追加します。
+- `Shift+Enter` で本文内に改行を入力します。
 - `Tab` / `Shift+Tab` で階層を変更します。
 - `Alt+↑` / `Alt+↓` で並べ替えます。
-- フォーカス中はMarkdown記号を確認しながら編集し、フォーカスを外すとプレビューに戻ります。
-- ヘッダーのクイック入力は配置先を決めずに思索を作ります。
+- 本文はフォーカスするとMarkdownを確認しながら編集でき、フォーカスを外すとプレビューに戻ります。
+- 画面上部のクイック入力は、配置先を決めずに項目を作ります。作成した項目は `未配置箱` から確認できます。
+- 項目を選択して `F1` を押すと、アプリ内ヘルプで操作を確認できます。
 
 ## 閲覧する
 
-ヘッダーの `Outline / Tree` から表示を切り替えます。Treeでは、実時間をX軸にする `Chronology` と、`FROM`系譜の世代をX軸にする `Lineage` を選べます。
-
-表示密度に応じて `Detail / Context / Overview` が切り替わり、Overviewの件数Nodeをクリックすると対象範囲へ拡大します。
+ヘッダーの `Outline / Tree` から表示を切り替えます。Treeでは、作成時刻をX軸にする `Chronology` と、`FROM` の世代をX軸にする `Lineage` を選べます。詳しい操作は [ツリービュー](/docs/tree-view) を参照してください。
 
 ## よく使うショートカット
 
 | 操作 | ショートカット |
 | --- | --- |
 | コマンドパレット | `Ctrl+K` |
-| 高度な意味関係編集 | `Ctrl+Shift+L` |
+| クイック入力 | `Ctrl+Shift+Enter` |
+| 意味関係を追加 | `Ctrl+Shift+L` |
+| 長文編集モード | `Ctrl+Shift+E` |
+| 絞り込み表示 | `Ctrl+Shift+H` |
+| 栞を追加 | `Ctrl+Shift+B` |
+| Queryを実行 | `Ctrl+Shift+Q` |
+| ヘルプ | `F1` |
 | 内部参照候補 | 本文で `[[` |
 | 意味関係の相手候補 | 本文で `@` |
 
 ## データの保存場所
 
-データは `%LOCALAPPDATA%\\RadioraV2\\surreal\\main.db` に保存されます。障害調査用にJSONストアで起動する場合は `deno task desktop:json` を使います。
+データは `%LOCALAPPDATA%\RadioraV2\surreal\main.db` に保存されます。ログは `%LOCALAPPDATA%\RadioraV2\logs\` に出力されます。障害調査用にJSONストアで起動する場合は `deno task desktop:json`、生成済みbundleでは `deno task desktop:run:json` を使います。

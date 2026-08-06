@@ -2,7 +2,7 @@
 title: スキーマと移行
 description: DBとJSONバックアップの形式を安全に進化させるための規則。
 section: Reference
-order: 6
+order: 11
 updated: 2026-08-06
 ---
 
