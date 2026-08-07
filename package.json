@@ -8,7 +8,8 @@
 		"build": "astro build",
 		"preview": "astro preview",
 		"deploy": "npm run build && wrangler deploy",
-		"check": "astro check"
+		"check": "astro check",
+		"sync:shortcuts": "deno run -A ../Radiora/scripts/docs_shortcuts.ts --splice src/content/docs/shortcuts.md"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^5.0.6",

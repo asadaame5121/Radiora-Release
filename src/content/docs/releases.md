@@ -2,7 +2,7 @@
 title: リリースノート
 description: Radioraの公開ビルドと変更点。
 section: Reference
-order: 12
+order: 13
 updated: 2026-08-06
 ---
 
