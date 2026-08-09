@@ -3,8 +3,23 @@ title: リリースノート
 description: Radioraの公開ビルドと変更点。
 section: Reference
 order: 13
-updated: 2026-08-06
+updated: 2026-08-09
 ---
+
+## 0.4.0 — 2026-08-09
+
+### Added
+
+- 前回正常に読み込めたアウトラインと選択位置を先行表示する、起動スナップショットを追加。
+- 起動失敗時の再試行、Windows上のSurrealDBプロセス復旧、起動準備状態の表示を改善。
+- 起動、RPC、静的ファイル、SurrealDBのイベントと処理時間を記録する、JSONL形式の構造化診断ログを追加。
+- アプリ内HelpにGitHub Releasesの最新版確認を追加。更新がある場合は安全なリリースページへのリンクを表示。
+- Helpを開く `Ctrl+Shift+/` を追加し、アプリ内Helpとドキュメントでキーバインド定義を共有。
+
+### Changed
+
+- アプリケーションとバックアップ／migration metadataのバージョンを0.4.0へ更新。
+- 画面、状態管理、SurrealDB接続、repository、migration、backup、validationの責務境界を整理し、起動とデータ処理の保守性を改善。
 
 ## 0.3.0 — 2026-08-06
 
@@ -25,4 +40,4 @@ updated: 2026-08-06
 - Quick Capture、Today、栞、作業再開位置、閲覧履歴、コマンドパレット、内部参照を追加。
 - Markdown、OPML、完全JSON backup／restore、旧backup migrationを追加。
 
-[GitHub Releasesで全リリースを見る →](https://github.com/asadaame5121/Radiora-Release/releases)
+[GitHub Releasesで全リリースを見る →](https://github.com/asadaame5121/Radiora/releases)
