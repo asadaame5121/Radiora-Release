@@ -3,8 +3,30 @@ title: リリースノート
 description: Radioraの公開ビルドと変更点。
 section: Reference
 order: 13
-updated: 2026-08-09
+updated: 2026-08-25
 ---
+
+## 0.4.3 — 2026-08-25
+
+### Added
+
+- アウトライン上で異なる項目を親子に配置すると、同じWork間に有効な明示リンクがない場合に、保存を伴わない暗黙の `FROM` として系統へ反映。
+- Lineageで項目を選択したとき、アウトライン上の祖先・子孫と `FROM` でつながる範囲を強調表示。
+
+### Changed
+
+- 暗黙の `FROM` は意味関係編集画面で区別して表示し、有効な明示リンクがある組み合わせでは自動導出しないようにした。
+
+## 0.4.2 — 2026-08-18
+
+### Added
+
+- Linux (x86_64)向けのDesktop bundle生成と起動をサポート。SurrealDB CLIも配布物へ同梱。
+- Linux版で起動時のautoUpdate試験、更新のstageとrollbackの構造化ログを追加。
+
+### Changed
+
+- アプリケーションとバックアップ／migration metadataのバージョンを0.4.2へ更新。
 
 ## 0.4.0 — 2026-08-09
 
