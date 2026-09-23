@@ -3,10 +3,10 @@ title: ショートカット一覧
 description: 現時点で利用できるキーバインディングの一覧。
 section: Reference
 order: 12
-updated: 2026-08-06
+updated: 2026-09-23
 ---
 
-この表はRadiora本体の `deno task docs:shortcuts` で生成されます。ドキュメント側では `npm run sync:shortcuts` を実行して更新します。
+この表はRadiora本体の現行コマンド・編集キーバインディングから生成されます。アプリの定義変更に合わせて同期してください。
 
 <!-- shortcuts:start -->
 
@@ -15,11 +15,11 @@ updated: 2026-08-06
 | 操作 | ショートカット |
 | --- | --- |
 | クイック入力 | `Ctrl+Shift+Enter` |
-| 絞り込み表示 | `Ctrl+Shift+H` |
-| 長文編集モード | `Ctrl+Shift+E` |
+| ここだけ表示 | `Ctrl+Shift+H` |
+| 原稿として開く | `Ctrl+Shift+E` |
 | 栞 | `Ctrl+Shift+B` |
-| 意味関係を追加 | `Ctrl+Shift+L` |
-| Queryを実行 | `Ctrl+Shift+Q` |
+| 関連を追加 | `Ctrl+Shift+L` |
+| 検索を実行 | `Ctrl+Shift+Q` |
 
 ## アウトラインの編集
 
@@ -31,8 +31,8 @@ updated: 2026-08-06
 | 親階層へ移動 | `Shift+Tab` |
 | 上へ並べ替え | `Alt+↑` |
 | 下へ並べ替え | `Alt+↓` |
-| 内部参照候補 | `本文で [[` |
-| 意味関係の相手候補 | `本文で @` |
+| 項目へのリンク候補 | `本文で [[` |
+| 関連先候補 | `本文で @` |
 | コマンドパレット | `Ctrl+K` |
 | TreeとOutlineを切り替え | `Space` |
 | ヘルプ | `F1 / Ctrl+Shift+/` |

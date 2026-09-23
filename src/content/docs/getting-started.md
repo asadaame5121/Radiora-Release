@@ -3,7 +3,7 @@ title: はじめる
 description: Radioraを起動し、最初の項目を書いて、アウトラインを使い始めるまでの手順。
 section: Start
 order: 2
-updated: 2026-08-25
+updated: 2026-09-23
 ---
 
 ## 必要な環境
@@ -25,7 +25,7 @@ deno task desktop:run
 
 アプリを起動したまま再度ビルドすると、生成先がロックされて失敗します。その場合は先にアプリのウィンドウを閉じてください。
 
-起動すると、最初に起動状態が表示され、その後ローカルデータを読み込みます。前回正常に読み込めたアウトラインがある場合は、起動スナップショットからアウトラインと選択位置を先行表示します。初期化に失敗した場合はウィンドウ内に原因と再試行ボタンが表示され、停止したSurrealDBプロセスも再起動時に復旧を試みます。
+起動すると、最初に起動状態が表示され、その後ローカルデータを読み込みます。前回正常に読み込めたアウトラインがある場合は、起動スナップショットからアウトラインと選択位置を先行表示します。初期化に失敗した場合はウィンドウ内に原因と再試行ボタンが表示されます。
 
 ## 配布物から起動する
 
@@ -40,13 +40,13 @@ Windows版はZip、Linux版はtar.gzで配布します。ベータ版のため�
 > [!note] 起動の保証について
 > アプリは開発中のDeno Desktop上で動作するため、環境によっては起動できない場合があります。起動しない場合は、以下の「起動できない場合」の手順に沿って確認してください。
 
-データはアプリ本体のフォルダではなく `%LOCALAPPDATA%` 側に保存されるため、配布物のフォルダを削除してもデータは消えません。
+データはアプリ本体のフォルダではなくローカルのアプリデータ領域に保存されるため、配布物のフォルダを削除してもデータは消えません。
 
 ## 起動できない場合
 
 1. `deno task desktop:preflight` を実行し、環境診断を確認します。
 2. `Deno Desktop requires Deno 2.9.0 or newer` と表示される場合は、Denoを更新してください。
-3. 詳細な記録は `%LOCALAPPDATA%\RadioraV2\logs\startup.log` にJSONL形式で保存されます。起動、RPC、静的ファイル、SurrealDBのイベントと処理時間を確認できます。原因と再試行ボタンがウィンドウに表示された場合は、このログを確認してください。
+3. Windowsでは詳細な記録が `%LOCALAPPDATA%\RadioraV2\logs\startup.log` にJSONL形式で保存されます。起動、RPC、静的ファイル、ローカルDBのイベントと処理時間を確認できます。原因と再試行ボタンがウィンドウに表示された場合は、このログを確認してください。
 
 WindowsとWSLで同じ `node_modules` を共有しないでください。ネイティブ依存がOSごとに異なるため、bundleのビルドと実行はWindows PowerShell側で `npm install` した依存を使ってください。
 
@@ -62,7 +62,7 @@ WindowsとWSLで同じ `node_modules` を共有しないでください。ネイ
 
 ## 閲覧する
 
-ヘッダーの `Outline / Tree` から表示を切り替えます。Treeでは、作成時刻をX軸にする `Chronology` と、`FROM` の世代をX軸にする `Lineage` を選べます。詳しい操作は [ツリービュー](/docs/tree-view) を参照してください。
+ヘッダーの `Outline / Tree` から表示を切り替えます。Treeの`Chronology`では作成日時と、インスペクターで設定した歴史上の時点・期間を使う年表を選べます。`Lineage`は世代を進める設定の関係型に沿って表示します。詳しい操作は [ツリービュー](/docs/tree-view) を参照してください。
 
 ## ショートカット
 
@@ -70,4 +70,6 @@ WindowsとWSLで同じ `node_modules` を共有しないでください。ネイ
 
 ## データの保存場所
 
-データは `%LOCALAPPDATA%\RadioraV2\surreal\main.db` に保存されます。ログは `%LOCALAPPDATA%\RadioraV2\logs\` に出力されます。障害調査用にJSONストアで起動する場合は `deno task desktop:json`、生成済みbundleでは `deno task desktop:run:json` を使います。
+Windowsでは通常データを `%LOCALAPPDATA%\RadioraV2\turso\radiora.db`（SQLite）に、ログを `%LOCALAPPDATA%\RadioraV2\logs\` に保存します。旧版のSurrealDBデータ `%LOCALAPPDATA%\RadioraV2\surreal\main.db` がある場合は、初回起動前に `deno task storage:migrate:legacy` を実行してください。移行タスクは元データを変更せずにバックアップを作成し、SQLiteへ移行します。未移行データが残っていると通常起動は停止します。
+
+障害調査用にJSONストアで起動する場合は `deno task desktop:json`、生成済みbundleでは `deno task desktop:run:json` を使います。JSONストアは通常の保存先ではなく手動フォールバックです。
